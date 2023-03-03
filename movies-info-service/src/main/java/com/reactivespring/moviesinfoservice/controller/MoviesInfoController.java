@@ -30,7 +30,7 @@ public class MoviesInfoController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<MovieInfo> addMovieInfo(@RequestBody @Valid MovieInfo movieInfo) {
         return movieInfoService.save(movieInfo)
-                .doOnNext(savedMovieInfo -> moviesInfoSink.tryEmitNext(savedMovieInfo));
+                .doOnNext(moviesInfoSink::tryEmitNext);
     }
 
     @GetMapping(value = "/movieinfos/stream", produces = MediaType.APPLICATION_NDJSON_VALUE)
